@@ -1,0 +1,35 @@
+.App {}
+
+.App-header {
+  margin-bottom: 32px;
+}
+
+.App-header-title {
+  padding-left: 1em;
+  font-weight: 300;
+}
+
+.App-body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.App-body-col {
+  margin: 32px;
+}
+
+.App-textarea {
+  width: 40vw;
+  height: 100px;
+  font-size: x-large;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App-canvas {
+  display: none;
+}
+
+.App-image {
+
+}
