@@ -2,13 +2,13 @@ import Canvg, { presets } from "canvg";
 import { DOMParser } from "xmldom";
 
 export async function processData(data) {
-  const { width, height, svg } = data;
+  const { width, height, svg, emSize } = data;
   const canvas = new OffscreenCanvas(width, height);
   const ctx = canvas.getContext("2d");
   const v = await Canvg.from(ctx, svg, {
     ...presets.offscreen(),
     DOMParser,
-    emSize: 32,
+    emSize,
   });
   await v.render();
   const blob = await canvas.convertToBlob();

@@ -7,33 +7,35 @@ import Worker from "comlink-loader!./Svg2PngWorker";
 
 const worker = new Worker();
 
+const EX_SIZE = 64;
+
 function App() {
   const { ready } = useMathJaxContext();
   const [tex, setTex] = useState("ax^2=c");
-  const [imgSrc, setImgSrc] = useState("");
-  const [imgSize, setImgSize] = useState({ width: 200, height: 200 });
+  const [imgSrc, setImgSrc] = useState({ src: "", width: 0, height: 0 });
   useEffect(() => {
     if (!ready) {
       return;
     }
     window.MathJax.tex2svgPromise(tex, {
-      em: 16,
-      ex: 8,
-      scale: 2,
-      display: true,
+      display: false,
     }).then(async (tex) => {
       window.tex = tex;
       const width =
-        tex.firstElementChild.width.baseVal.valueInSpecifiedUnits * 32;
+        tex.firstElementChild.width.baseVal.valueInSpecifiedUnits * EX_SIZE;
       const height =
-        tex.firstElementChild.height.baseVal.valueInSpecifiedUnits * 32;
-      console.log({ width, height });
+        tex.firstElementChild.height.baseVal.valueInSpecifiedUnits * EX_SIZE;
       const { pngUrl } = await worker.processData({
         svg: tex.outerHTML,
         width,
         height,
+        emSize: EX_SIZE * 2,
       });
-      setImgSrc(pngUrl);
+      setImgSrc({
+        src: pngUrl,
+        width: width / 4,
+        height: height / 4,
+      });
     });
   }, [ready, tex]);
   return (
@@ -50,13 +52,15 @@ function App() {
           />
         </div>
         <div className="App-body-col">
-          <img
-            className="App-image"
-            src={imgSrc}
-            width="236"
-            height="70"
-            alt=""
-          />
+          {imgSrc.src && (
+            <img
+              className="App-image"
+              src={imgSrc.src}
+              width={imgSrc.width}
+              height={imgSrc.height}
+              alt=""
+            />
+          )}
         </div>
       </div>
     </div>
