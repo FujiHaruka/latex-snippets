@@ -5,10 +5,12 @@
   "dependencies": {
     "canvg": "^3.0.7",
     "comlink-loader": "^2.0.0",
+    "dom-parser": "^0.1.6",
     "mathjax": "^3.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3"
+    "react-scripts": "4.0.3",
+    "xmldom": "^0.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }

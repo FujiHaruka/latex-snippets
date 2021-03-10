@@ -1,32 +1,32 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from "react";
 
-const MathJaxContext = createContext({ ready: false })
+const MathJaxContext = createContext({ ready: false });
 
-export const useMathJaxContext = () => useContext(MathJaxContext)
+export const useMathJaxContext = () => useContext(MathJaxContext);
 
 export const MathJaxLoader = ({ children }) => {
-  const [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(false);
   useEffect(() => {
     // Load MathJax
     window.MathJax = {
       tex: {
-        inlineMath: [['$', '$']]
+        inlineMath: [["$", "$"]],
       },
       svg: {
-        fontCache: 'none'
+        fontCache: "none",
       },
       startup: {
         ready: () => {
           window.MathJax.startup.defaultReady();
-          setReady(true)
-        }
-      }
+          setReady(true);
+        },
+      },
     };
-    void import("mathjax/es5/tex-svg-full")
-  }, [])
+    void import("mathjax/es5/tex-svg-full");
+  }, []);
   return (
     <MathJaxContext.Provider value={{ ready }}>
       {children}
     </MathJaxContext.Provider>
-  )
-}
+  );
+};
