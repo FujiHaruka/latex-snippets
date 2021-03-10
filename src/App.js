@@ -49,6 +49,7 @@ function App() {
             className="App-textarea"
             value={tex}
             onChange={(e) => setTex(e.target.value)}
+            spellCheck={false}
           />
         </div>
         <div className="App-body-col">
