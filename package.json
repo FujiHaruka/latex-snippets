@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "canvg": "^3.0.7",
+    "comlink-loader": "^2.0.0",
     "mathjax": "^3.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

@@ -1,22 +1,25 @@
 import "./App.css"
 import { useEffect, useRef, useState } from 'react';
 import { useMathJaxContext } from './MathJaxLoader';
-import Canvg from 'canvg'
+
+import { processData } from './worker/Svg2PngWorker'
 
 function App() {
   const { ready } = useMathJaxContext()
   const [tex, setTex] = useState('ax^2=c')
   const [imgSrc, setImgSrc] = useState('')
-  const canvas = useRef(null)
+  const [imgSize, setImgSize] = useState({ width: 200, height: 200 })
   useEffect(() => {
     if (!ready) {
       return
     }
-    window.MathJax.tex2svgPromise(tex, { em: 32, ex: 16, scale: 2, display: false }).then((tex) => {
-      const ctx = canvas.current.getContext('2d')
-      Canvg.fromString(ctx, tex.outerHTML).start()
-      const dataUrl = canvas.current.toDataURL()
-      setImgSrc(dataUrl)
+    window.MathJax.tex2svgPromise(tex, { em: 16, ex: 8, scale: 2, display: true }).then(async (tex) => {
+      window.tex = tex
+      const width = tex.firstElementChild.width.baseVal.valueInSpecifiedUnits * 32
+      const height = tex.firstElementChild.height.baseVal.valueInSpecifiedUnits * 32
+      console.log({ width, height })
+      const { pngUrl } = await processData({ svg: tex.outerHTML, width, height })
+      setImgSrc(pngUrl)
     })
   }, [ready, tex])
   return (
@@ -29,8 +32,7 @@ function App() {
         <textarea className="App-textarea" value={tex} onChange={(e) => setTex(e.target.value)} />
       </div>
       <div className="App-body-col">
-        <img src={imgSrc} width="200" height="200" alt="" />
-        <canvas className="App-canvas" ref={canvas} width="200" height="200"></canvas>
+        <img className="App-image" src={imgSrc} width="236" height="70" alt="" />
       </div>
       </div>
     </div>
