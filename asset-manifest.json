@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/latex-snippets/static/css/main.1767a047.chunk.css",
+    "main.js": "/latex-snippets/static/js/main.f1582a11.chunk.js",
+    "main.js.map": "/latex-snippets/static/js/main.f1582a11.chunk.js.map",
+    "runtime-main.js": "/latex-snippets/static/js/runtime-main.be8a8fd3.js",
+    "runtime-main.js.map": "/latex-snippets/static/js/runtime-main.be8a8fd3.js.map",
+    "static/js/2.7f549b3e.chunk.js": "/latex-snippets/static/js/2.7f549b3e.chunk.js",
+    "static/js/2.7f549b3e.chunk.js.map": "/latex-snippets/static/js/2.7f549b3e.chunk.js.map",
+    "static/js/3.195fe299.chunk.js": "/latex-snippets/static/js/3.195fe299.chunk.js",
+    "static/js/3.195fe299.chunk.js.map": "/latex-snippets/static/js/3.195fe299.chunk.js.map",
+    "63ad6a3443fe81a166b8.worker.js": "/latex-snippets/63ad6a3443fe81a166b8.worker.js",
+    "63ad6a3443fe81a166b8.worker.js.LICENSE.txt": "/latex-snippets/63ad6a3443fe81a166b8.worker.js.LICENSE.txt",
+    "63ad6a3443fe81a166b8.worker.js.map": "/latex-snippets/63ad6a3443fe81a166b8.worker.js.map",
+    "index.html": "/latex-snippets/index.html",
+    "static/css/main.1767a047.chunk.css.map": "/latex-snippets/static/css/main.1767a047.chunk.css.map",
+    "static/js/2.7f549b3e.chunk.js.LICENSE.txt": "/latex-snippets/static/js/2.7f549b3e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.be8a8fd3.js",
+    "static/js/2.7f549b3e.chunk.js",
+    "static/css/main.1767a047.chunk.css",
+    "static/js/main.f1582a11.chunk.js"
+  ]
+}
