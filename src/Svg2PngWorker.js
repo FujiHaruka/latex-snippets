@@ -1,5 +1,4 @@
 import Canvg, { presets } from "canvg";
-import { DOMParser } from "xmldom";
 
 export async function processData(data) {
   const { width, height, svg, emSize } = data;
@@ -7,7 +6,6 @@ export async function processData(data) {
   const ctx = canvas.getContext("2d");
   const v = await Canvg.from(ctx, svg, {
     ...presets.offscreen(),
-    DOMParser,
     emSize,
   });
   await v.render();

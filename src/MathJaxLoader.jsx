@@ -9,9 +9,7 @@ export const MathJaxLoader = ({ children }) => {
   useEffect(() => {
     // Load MathJax
     window.MathJax = {
-      tex: {
-        inlineMath: [["$", "$"]],
-      },
+      tex: {},
       svg: {
         fontCache: "none",
       },

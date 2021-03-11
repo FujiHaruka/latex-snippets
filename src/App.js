@@ -1,43 +1,43 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMathJaxContext } from "./MathJaxLoader";
+import SVG from "react-inlinesvg";
+import { useTextInput } from "./hooks";
 
-// eslint-disable-next-line
-import Worker from "comlink-loader!./Svg2PngWorker";
+import { processData } from "./Svg2PngWorker";
+import { donwloadBlob } from "./helpers";
 
-const worker = new Worker();
-
-const EX_SIZE = 64;
+const PNG_SCALE = 4;
+const SVG_SCALE = 16;
 
 function App() {
   const { ready } = useMathJaxContext();
-  const [tex, setTex] = useState("ax^2=c");
-  const [imgSrc, setImgSrc] = useState({ src: "", width: 0, height: 0 });
+  const { text, onChangeText } = useTextInput("ax^2=c");
+  const [svg, setSvg] = useState(null);
+  const onDownload = useCallback(async () => {
+    const width = svg.width * PNG_SCALE;
+    const height = svg.height * PNG_SCALE;
+    const { pngUrl } = await processData({
+      svg: svg.svgText,
+      width,
+      height,
+      emSize: SVG_SCALE * PNG_SCALE * 2,
+    });
+    donwloadBlob(pngUrl, ".png");
+  }, [svg]);
   useEffect(() => {
     if (!ready) {
       return;
     }
-    window.MathJax.tex2svgPromise(tex, {
-      display: false,
-    }).then(async (tex) => {
-      window.tex = tex;
+    window.MathJax.tex2svgPromise(text, { display: false }).then((svg) => {
+      const svgText = svg.firstElementChild.outerHTML;
       const width =
-        tex.firstElementChild.width.baseVal.valueInSpecifiedUnits * EX_SIZE;
+        svg.firstElementChild.width.baseVal.valueInSpecifiedUnits * SVG_SCALE;
       const height =
-        tex.firstElementChild.height.baseVal.valueInSpecifiedUnits * EX_SIZE;
-      const { pngUrl } = await worker.processData({
-        svg: tex.outerHTML,
-        width,
-        height,
-        emSize: EX_SIZE * 2,
-      });
-      setImgSrc({
-        src: pngUrl,
-        width: width / 4,
-        height: height / 4,
-      });
+        svg.firstElementChild.height.baseVal.valueInSpecifiedUnits * SVG_SCALE;
+      setSvg({ svgText, width, height });
     });
-  }, [ready, tex]);
+  }, [ready, text, setSvg]);
   return (
     <div className="App">
       <header className="App-header">
@@ -47,21 +47,18 @@ function App() {
         <div className="App-body-col">
           <textarea
             className="App-textarea"
-            value={tex}
-            onChange={(e) => setTex(e.target.value)}
+            value={text}
+            onChange={onChangeText}
             spellCheck={false}
           />
         </div>
         <div className="App-body-col">
-          {imgSrc.src && (
-            <img
-              className="App-image"
-              src={imgSrc.src}
-              width={imgSrc.width}
-              height={imgSrc.height}
-              alt=""
-            />
+          {svg && (
+            <SVG src={svg.svgText} width={svg.width} height={svg.height} />
           )}
+        </div>
+        <div>
+          <button onClick={onDownload}>Donwload as PNG</button>
         </div>
       </div>
     </div>
