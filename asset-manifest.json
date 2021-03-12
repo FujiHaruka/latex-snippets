@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/latex-snippets/static/css/main.504729e1.chunk.css",
-    "main.js": "/latex-snippets/static/js/main.988439db.chunk.js",
-    "main.js.map": "/latex-snippets/static/js/main.988439db.chunk.js.map",
-    "runtime-main.js": "/latex-snippets/static/js/runtime-main.ac6173ba.js",
-    "runtime-main.js.map": "/latex-snippets/static/js/runtime-main.ac6173ba.js.map",
+    "main.css": "/latex-snippets/static/css/main.edfcda21.chunk.css",
+    "main.js": "/latex-snippets/static/js/main.138c4df6.chunk.js",
+    "main.js.map": "/latex-snippets/static/js/main.138c4df6.chunk.js.map",
+    "runtime-main.js": "/latex-snippets/static/js/runtime-main.b854b998.js",
+    "runtime-main.js.map": "/latex-snippets/static/js/runtime-main.b854b998.js.map",
     "static/css/2.bf7c4fb8.chunk.css": "/latex-snippets/static/css/2.bf7c4fb8.chunk.css",
-    "static/js/2.0b36134d.chunk.js": "/latex-snippets/static/js/2.0b36134d.chunk.js",
-    "static/js/2.0b36134d.chunk.js.map": "/latex-snippets/static/js/2.0b36134d.chunk.js.map",
-    "static/js/3.b914a331.chunk.js": "/latex-snippets/static/js/3.b914a331.chunk.js",
-    "static/js/3.b914a331.chunk.js.map": "/latex-snippets/static/js/3.b914a331.chunk.js.map",
+    "static/js/2.e3b1bca7.chunk.js": "/latex-snippets/static/js/2.e3b1bca7.chunk.js",
+    "static/js/2.e3b1bca7.chunk.js.map": "/latex-snippets/static/js/2.e3b1bca7.chunk.js.map",
+    "static/js/3.581a4b01.chunk.js": "/latex-snippets/static/js/3.581a4b01.chunk.js",
+    "static/js/3.581a4b01.chunk.js.map": "/latex-snippets/static/js/3.581a4b01.chunk.js.map",
     "index.html": "/latex-snippets/index.html",
     "static/css/2.bf7c4fb8.chunk.css.map": "/latex-snippets/static/css/2.bf7c4fb8.chunk.css.map",
-    "static/css/main.504729e1.chunk.css.map": "/latex-snippets/static/css/main.504729e1.chunk.css.map",
-    "static/js/2.0b36134d.chunk.js.LICENSE.txt": "/latex-snippets/static/js/2.0b36134d.chunk.js.LICENSE.txt",
+    "static/css/main.edfcda21.chunk.css.map": "/latex-snippets/static/css/main.edfcda21.chunk.css.map",
+    "static/js/2.e3b1bca7.chunk.js.LICENSE.txt": "/latex-snippets/static/js/2.e3b1bca7.chunk.js.LICENSE.txt",
     "static/media/semantic.min.css": "/latex-snippets/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.ac6173ba.js",
+    "static/js/runtime-main.b854b998.js",
     "static/css/2.bf7c4fb8.chunk.css",
-    "static/js/2.0b36134d.chunk.js",
-    "static/css/main.504729e1.chunk.css",
-    "static/js/main.988439db.chunk.js"
+    "static/js/2.e3b1bca7.chunk.js",
+    "static/css/main.edfcda21.chunk.css",
+    "static/js/main.138c4df6.chunk.js"
   ]
 }
