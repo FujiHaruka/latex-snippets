@@ -2,21 +2,22 @@ import "./App.css";
 import { useCallback, useEffect, useState } from "react";
 import { useMathJaxContext } from "./MathJaxLoader";
 import SVG from "react-inlinesvg";
-import { useTextInput, useToggle } from "./hooks";
-import { List, Button, Icon, Form, TextArea } from 'semantic-ui-react'
+import { useSnippetStorage, useTextInput, useToggle } from "./hooks";
+import { List, Button, Icon, Form, TextArea } from "semantic-ui-react";
 
 import { processData } from "./Svg2PngWorker";
-import { donwloadBlob, Storage } from "./helpers";
-import { TexSvg } from './TexSvg';
+import { donwloadBlob } from "./helpers";
+import { TexSvg } from "./TexSvg";
 
 const PNG_SCALE = 4;
 const SVG_SCALE = 16;
 
 function App() {
   const { ready } = useMathJaxContext();
-  const { text, onChangeText } = useTextInput('ax^2+bx+c=0');
+  const { text, onChangeText } = useTextInput("ax^2+bx+c=0");
   const [svg, setSvg] = useState(null);
-  const [openSnippets, toggleOpenSnippets] = useToggle(false)
+  const [openSnippets, toggleOpenSnippets] = useToggle(false);
+  const { snippets, addSnippet, deleteSnippet } = useSnippetStorage();
   const onDownload = useCallback(async () => {
     const width = svg.width * PNG_SCALE;
     const height = svg.height * PNG_SCALE;
@@ -28,10 +29,6 @@ function App() {
     });
     donwloadBlob(pngUrl, ".png");
   }, [svg]);
-  const saveSnippet = useCallback(() => {
-    console.log({ text })
-    Storage.saveSnippet(text)
-  }, [text])
   useEffect(() => {
     if (!ready) {
       return;
@@ -52,14 +49,14 @@ function App() {
       </header>
       <div>
         <div className="App-row pure-form">
-          <Form>            
-          <TextArea
-            className="App-textarea"
-            placeholder="Write a LaTeX equation"
-            value={text}
-            onChange={onChangeText}
-            spellCheck={false}
-          />
+          <Form>
+            <TextArea
+              className="App-textarea"
+              placeholder="Write a LaTeX equation"
+              value={text}
+              onChange={onChangeText}
+              spellCheck={false}
+            />
           </Form>
         </div>
         <div className="App-row">
@@ -67,24 +64,36 @@ function App() {
             <SVG src={svg.svgText} width={svg.width} height={svg.height} />
           )}
         </div>
-        <div className="App-row">
-        </div>
+        <div className="App-row"></div>
         <div className="App-row">
           <div>
-              <Button onClick={toggleOpenSnippets}><Icon name={openSnippets ? "angle down" : "angle up"} /> Snippets</Button>
-              <Button onClick={saveSnippet}><Icon name="save outline" /> Save</Button>
-              <Button disabled={!svg} onClick={onDownload}><Icon name="download" /> Donwload as PNG</Button>
+            <Button onClick={toggleOpenSnippets}>
+              <Icon name={openSnippets ? "angle down" : "angle up"} />{" "}
+              {openSnippets ? "Hide" : "Show"} Snippets
+            </Button>
+            <Button onClick={() => addSnippet(text)}>
+              <Icon name="save outline" /> Save
+            </Button>
+            <Button disabled={!svg} onClick={onDownload}>
+              <Icon name="download" /> Donwload as PNG
+            </Button>
           </div>
-          {
-            openSnippets &&
+          {openSnippets && (
             <List>
-              {
-                Storage.listSnippets().map((tex) => (
-                  <List.Item><TexSvg tex={tex} scale={12} /></List.Item>
-                ))
-              }
+              {snippets.map(({ key, tex }) => (
+                <List.Item>
+                  <List.Content floated="right">
+                    <Button icon circular onClick={() => deleteSnippet(key)}>
+                      <Icon name="trash" />
+                    </Button>
+                  </List.Content>
+                  <List.Content>
+                    <TexSvg tex={tex} scale={12} />
+                  </List.Content>
+                </List.Item>
+              ))}
             </List>
-          }
+          )}
         </div>
       </div>
     </div>

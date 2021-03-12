@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 export const donwloadBlob = (objectUrl, ext) => {
   const a = document.createElement("a");
@@ -14,16 +14,23 @@ export const donwloadBlob = (objectUrl, ext) => {
 
 export const Storage = {
   saveSnippet(text) {
-    const key = `latex-snippets:${dayjs().unix()}`
-    window.localStorage.setItem(key, text)
+    const key = `latex-snippets:${dayjs().unix()}`;
+    window.localStorage.setItem(key, text);
   },
   listSnippets() {
-    const keys = Object.keys(localStorage).filter(key => key.startsWith('latex-snippets:'))
-      .map((key) => ({ key, date: Number(key.split(':').pop()) }))
+    const keys = Object.keys(localStorage)
+      .filter((key) => key.startsWith("latex-snippets:"))
+      .map((key) => ({ key, date: Number(key.split(":").pop()) }))
       .filter(({ date }) => !Number.isNaN(date))
       .sort((a, b) => b.date - a.date)
-      .map(({key}) => key)
-    const snippets = keys.map((key) => window.localStorage.getItem(key))
-     return snippets
-  }
-}
+      .map(({ key }) => key);
+    const snippets = keys.map((key) => ({
+      tex: window.localStorage.getItem(key),
+      key,
+    }));
+    return snippets;
+  },
+  deleteSnippet(key) {
+    window.localStorage.removeItem(key);
+  },
+};

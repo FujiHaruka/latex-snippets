@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import SVG from "react-inlinesvg";
-import { useMathJaxContext } from './MathJaxLoader';
+import { useMathJaxContext } from "./MathJaxLoader";
 
 export const TexSvg = ({ tex, scale }) => {
   const { ready } = useMathJaxContext();
@@ -19,10 +19,8 @@ export const TexSvg = ({ tex, scale }) => {
     });
   }, [ready, tex, setSvg, scale]);
   if (!svg) {
-    return null
+    return null;
   }
 
-  return (
-    <SVG src={svg.svgText} width={svg.width} height={svg.height} />
-  )
-}
+  return <SVG src={svg.svgText} width={svg.width} height={svg.height} />;
+};
