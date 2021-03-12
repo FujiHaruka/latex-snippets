@@ -5,10 +5,11 @@ import {
   useToggle,
   useDownloadPng,
 } from "./hooks";
-import { List, Button, Icon, Form, TextArea } from "semantic-ui-react";
+import { Form, TextArea } from "semantic-ui-react";
 import { TexSvg } from "./TexSvg";
 import { useCallback } from "react";
 import { SaveButton, SnippetsToggleButton } from "./Buttons";
+import { SnippetList } from "./SnippetList";
 
 const PNG_SCALE = 4;
 const SVG_SCALE = 16;
@@ -27,11 +28,11 @@ function App() {
   }, [text, addSnippet, toggleOpenSnippets]);
   return (
     <div className="App">
-      <header className="App-header">
-        <h2 className="App-header-title">LaTeX Snippets</h2>
-      </header>
       <div>
-        <div className="App-row pure-form">
+        <header className="App-header">
+          <h2 className="App-header-title">LaTeX Snippets</h2>
+        </header>
+        <div className="App-row App-container">
           <Form>
             <TextArea
               className="App-textarea"
@@ -42,56 +43,30 @@ function App() {
             />
           </Form>
         </div>
-        <div className="App-row">
+        <div className="App-row App-container">
           <TexSvg tex={text} scale={SVG_SCALE} />
         </div>
-        <div className="App-menu">
-          <div>
-            <SaveButton onClick={onSave} />
-            <SnippetsToggleButton
-              onToggle={toggleOpenSnippets}
-              open={openSnippets}
+        <div className="App-menu App-container">
+          <SaveButton onClick={onSave} />
+          <SnippetsToggleButton
+            onToggle={toggleOpenSnippets}
+            open={openSnippets}
+          />
+        </div>
+        {openSnippets && (
+          <div className="App-snippets App-container">
+            <SnippetList
+              snippets={snippets}
+              onPaste={onResetText}
+              onDownload={onDownload}
+              onDelete={deleteSnippet}
             />
           </div>
-          {openSnippets && (
-            <List relaxed>
-              {snippets.map(({ key, tex }) => (
-                <List.Item key={key}>
-                  <List.Content floated="right">
-                    <Button
-                      icon
-                      circular
-                      onClick={() => onResetText(tex)}
-                      title="Edit"
-                    >
-                      <Icon name="edit" />
-                    </Button>
-                    <Button
-                      icon
-                      circular
-                      onClick={() => deleteSnippet(key)}
-                      title="Delete"
-                    >
-                      <Icon name="trash" />
-                    </Button>
-                    <Button
-                      icon
-                      circular
-                      onClick={() => onDownload({ key, tex })}
-                      title="Download"
-                    >
-                      <Icon name="download" />
-                    </Button>
-                  </List.Content>
-                  <List.Content>
-                    <TexSvg tex={tex} scale={12} />
-                  </List.Content>
-                </List.Item>
-              ))}
-            </List>
-          )}
-        </div>
+        )}
       </div>
+      <footer className="App-footer">
+        <div>© 2021 FujiHaruka</div>
+      </footer>
     </div>
   );
 }

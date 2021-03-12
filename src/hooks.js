@@ -86,7 +86,7 @@ export const useDownloadPng = ({ pngScale, svgScale }) => {
         svg: svg.svgText,
         width,
         height,
-        emSize: pngScale * pngScale * 2,
+        emSize: svgScale * pngScale * 2,
       });
       donwloadBlob(pngUrl, `${key.split(":").pop()}.png`);
     },
