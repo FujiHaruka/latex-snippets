@@ -2,6 +2,7 @@
 }
 
 .App-header {
+  margin: 16px;
   margin-bottom: 32px;
 }
 
@@ -10,22 +11,16 @@
   font-weight: 300;
 }
 
-.App-body {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.App-body-col {
+.App-row {
   margin: 32px;
+  margin-top: 54px;
 }
 
 .App-textarea {
-  width: 40vw;
-  height: 100px;
-  font-size: x-large;
+  width: 100%;
+  max-width: 800px;
+  height: 12em;
+  font-size: large;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-.App-image {
 }

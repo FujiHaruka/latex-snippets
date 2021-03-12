@@ -13,3 +13,12 @@ export const useTextInput = (initText) => {
     onChangeText,
   };
 };
+
+export const useToggle = (initBool) => {
+  const [open, setOpen] = useState(false)
+  const toggleOpen = useCallback(() => setOpen((val) => !val), [setOpen])
+  return [
+    open,
+    toggleOpen,
+  ]
+}
