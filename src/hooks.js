@@ -17,7 +17,16 @@ export const useTextInput = (initText) => {
 
 export const useToggle = (initBool) => {
   const [open, setOpen] = useState(false);
-  const toggleOpen = useCallback(() => setOpen((val) => !val), [setOpen]);
+  const toggleOpen = useCallback(
+    (arg) => {
+      if (typeof arg === "boolean") {
+        setOpen(arg);
+      } else {
+        setOpen((val) => !val);
+      }
+    },
+    [setOpen]
+  );
   return [open, toggleOpen];
 };
 

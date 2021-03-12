@@ -1,47 +1,26 @@
 import "./App.css";
-import { useCallback, useEffect, useState } from "react";
-import { useMathJaxContext } from "./MathJaxLoader";
-import SVG from "react-inlinesvg";
 import { useSnippetStorage, useTextInput, useToggle } from "./hooks";
 import { List, Button, Icon, Form, TextArea } from "semantic-ui-react";
 
-import { processData } from "./Svg2PngWorker";
-import { donwloadBlob } from "./helpers";
+import { useDownloadPng } from "./helpers";
 import { TexSvg } from "./TexSvg";
+import { useCallback } from "react";
 
 const PNG_SCALE = 4;
 const SVG_SCALE = 16;
 
 function App() {
-  const { ready } = useMathJaxContext();
   const { text, onChangeText } = useTextInput("ax^2+bx+c=0");
-  const [svg, setSvg] = useState(null);
   const [openSnippets, toggleOpenSnippets] = useToggle(false);
   const { snippets, addSnippet, deleteSnippet } = useSnippetStorage();
-  const onDownload = useCallback(async () => {
-    const width = svg.width * PNG_SCALE;
-    const height = svg.height * PNG_SCALE;
-    const { pngUrl } = await processData({
-      svg: svg.svgText,
-      width,
-      height,
-      emSize: SVG_SCALE * PNG_SCALE * 2,
-    });
-    donwloadBlob(pngUrl, ".png");
-  }, [svg]);
-  useEffect(() => {
-    if (!ready) {
-      return;
-    }
-    window.MathJax.tex2svgPromise(text, { display: false }).then((svg) => {
-      const svgText = svg.firstElementChild.outerHTML;
-      const width =
-        svg.firstElementChild.width.baseVal.valueInSpecifiedUnits * SVG_SCALE;
-      const height =
-        svg.firstElementChild.height.baseVal.valueInSpecifiedUnits * SVG_SCALE;
-      setSvg({ svgText, width, height });
-    });
-  }, [ready, text, setSvg]);
+  const onDownload = useDownloadPng({
+    pngScale: PNG_SCALE,
+    svgScale: SVG_SCALE,
+  });
+  const onSave = useCallback(() => {
+    addSnippet(text);
+    toggleOpenSnippets(true);
+  }, [text, addSnippet, toggleOpenSnippets]);
   return (
     <div className="App">
       <header className="App-header">
@@ -60,22 +39,16 @@ function App() {
           </Form>
         </div>
         <div className="App-row">
-          {svg && (
-            <SVG src={svg.svgText} width={svg.width} height={svg.height} />
-          )}
+          <TexSvg tex={text} scale={SVG_SCALE} />
         </div>
-        <div className="App-row"></div>
         <div className="App-row">
           <div>
+            <Button onClick={onSave}>
+              <Icon name="save outline" /> Save
+            </Button>
             <Button onClick={toggleOpenSnippets}>
               <Icon name={openSnippets ? "angle down" : "angle up"} />{" "}
               {openSnippets ? "Hide" : "Show"} Snippets
-            </Button>
-            <Button onClick={() => addSnippet(text)}>
-              <Icon name="save outline" /> Save
-            </Button>
-            <Button disabled={!svg} onClick={onDownload}>
-              <Icon name="download" /> Donwload as PNG
             </Button>
           </div>
           {openSnippets && (
@@ -83,8 +56,23 @@ function App() {
               {snippets.map(({ key, tex }) => (
                 <List.Item className="App-snippet-list-item" key={key}>
                   <List.Content floated="right">
-                    <Button icon circular onClick={() => deleteSnippet(key)}>
+                    <Button
+                      icon
+                      circular
+                      onClick={() => deleteSnippet(key)}
+                      title="Delete"
+                    >
                       <Icon name="trash" />
+                    </Button>
+                  </List.Content>
+                  <List.Content floated="right">
+                    <Button
+                      icon
+                      circular
+                      onClick={() => onDownload({ key, tex })}
+                      title="Download"
+                    >
+                      <Icon name="download" />
                     </Button>
                   </List.Content>
                   <List.Content
