@@ -1,6 +1,4 @@
 import dayjs from "dayjs";
-import { useCallback } from "react";
-import { processData } from "./Svg2PngWorker";
 
 export const donwloadBlob = (objectUrl, filename) => {
   const a = document.createElement("a");
@@ -35,37 +33,4 @@ export const Storage = {
   deleteSnippet(key) {
     window.localStorage.removeItem(key);
   },
-};
-
-export const useDownloadPng = ({ pngScale, svgScale }) => {
-  const onDownload = useCallback(
-    async (snippet) => {
-      const { tex, key } = snippet;
-      const svg = await window.MathJax.tex2svgPromise(tex, {
-        display: false,
-      }).then((svg) => {
-        const svgText = svg.firstElementChild.outerHTML;
-        const width =
-          svg.firstElementChild.width.baseVal.valueInSpecifiedUnits * svgScale;
-        const height =
-          svg.firstElementChild.height.baseVal.valueInSpecifiedUnits * svgScale;
-        return {
-          svgText,
-          width,
-          height,
-        };
-      });
-      const width = svg.width * pngScale;
-      const height = svg.height * pngScale;
-      const { pngUrl } = await processData({
-        svg: svg.svgText,
-        width,
-        height,
-        emSize: pngScale * pngScale * 2,
-      });
-      donwloadBlob(pngUrl, `${key.split(":").pop()}.png`);
-    },
-    [pngScale, svgScale]
-  );
-  return onDownload;
 };

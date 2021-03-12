@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Storage } from "./helpers";
+import { donwloadBlob, Storage } from "./helpers";
+import { processData } from "./Svg2PngWorker";
 
 export const useTextInput = (initText) => {
   const [text, setText] = useState(initText);
@@ -12,6 +13,7 @@ export const useTextInput = (initText) => {
   return {
     text,
     onChangeText,
+    onResetText: setText,
   };
 };
 
@@ -58,4 +60,37 @@ export const useSnippetStorage = () => {
     deleteSnippet,
     snippets,
   };
+};
+
+export const useDownloadPng = ({ pngScale, svgScale }) => {
+  const onDownload = useCallback(
+    async (snippet) => {
+      const { tex, key } = snippet;
+      const svg = await window.MathJax.tex2svgPromise(tex, {
+        display: false,
+      }).then((svg) => {
+        const svgText = svg.firstElementChild.outerHTML;
+        const width =
+          svg.firstElementChild.width.baseVal.valueInSpecifiedUnits * svgScale;
+        const height =
+          svg.firstElementChild.height.baseVal.valueInSpecifiedUnits * svgScale;
+        return {
+          svgText,
+          width,
+          height,
+        };
+      });
+      const width = svg.width * pngScale;
+      const height = svg.height * pngScale;
+      const { pngUrl } = await processData({
+        svg: svg.svgText,
+        width,
+        height,
+        emSize: pngScale * pngScale * 2,
+      });
+      donwloadBlob(pngUrl, `${key.split(":").pop()}.png`);
+    },
+    [pngScale, svgScale]
+  );
+  return onDownload;
 };

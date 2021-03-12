@@ -16,6 +16,11 @@
   margin-top: 54px;
 }
 
+.App-menu {
+  margin: 32px;
+  margin-top: 82px;
+}
+
 .App-textarea {
   width: 100%;
   max-width: 800px;
@@ -23,14 +28,4 @@
   font-size: large;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-.App-snippet-list-item {
-  cursor: pointer;
-}
-.App-snippet-list-item:hover {
-  background-color: rgb(243, 243, 243);
-}
-.App-snippet-list-item:active {
-  background-color: rgb(235, 235, 235);
 }
