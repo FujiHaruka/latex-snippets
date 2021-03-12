@@ -30,11 +30,11 @@ export const SnippetsToggleButton = ({ onToggle, open }) => {
     <Button onClick={onToggle}>
       {open ? (
         <>
-          <Icon name="angle down" /> Hide Snippets
+          <Icon name="angle up" /> Hide Snippets
         </>
       ) : (
         <>
-          <Icon name="angle up" /> Show Snippets
+          <Icon name="angle down" /> Show Snippets
         </>
       )}
     </Button>

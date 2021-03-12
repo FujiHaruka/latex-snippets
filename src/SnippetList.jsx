@@ -4,7 +4,7 @@ import { TexSvg } from "./TexSvg";
 
 export const SnippetList = ({ snippets, onPaste, onDownload, onDelete }) => {
   return (
-    <List relaxed="very">
+    <List relaxed="very" divided>
       {snippets.map(({ key, tex }) => (
         <List.Item key={key}>
           <List.Content floated="right">

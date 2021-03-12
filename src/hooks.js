@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useMemo } from "react";
+import { useCallback, useState } from "react";
 import { donwloadBlob, Storage } from "./helpers";
 import { processData } from "./Svg2PngWorker";
 
@@ -33,7 +34,8 @@ export const useToggle = (initBool) => {
 };
 
 export const useSnippetStorage = () => {
-  const [snippets, setSnippets] = useState([]);
+  const init = useMemo(() => Storage.listSnippets(), []);
+  const [snippets, setSnippets] = useState(init);
   const sync = useCallback(() => {
     const snippets = Storage.listSnippets();
     setSnippets(snippets);
@@ -52,13 +54,11 @@ export const useSnippetStorage = () => {
     },
     [sync]
   );
-  useEffect(() => {
-    sync();
-  }, [sync]);
   return {
     addSnippet,
     deleteSnippet,
     snippets,
+    topSnippet: snippets[0]?.tex,
   };
 };
 

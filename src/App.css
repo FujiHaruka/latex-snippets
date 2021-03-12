@@ -17,6 +17,8 @@
 .App-header-title {
   padding-left: 1em;
   font-weight: 300;
+  font-size: 1.5rem;
+  opacity: 0.8;
 }
 
 .App-row {
@@ -28,15 +30,13 @@
 }
 
 .App-snippets {
-  max-width: 800px;
   margin-bottom: 64px;
 }
 
 .App-textarea {
   width: 100%;
-  max-width: 800px;
   height: 12em;
-  font-size: large;
+  font-size: large !important;
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }

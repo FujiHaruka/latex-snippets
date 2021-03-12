@@ -5,7 +5,7 @@ import {
   useToggle,
   useDownloadPng,
 } from "./hooks";
-import { Form, TextArea } from "semantic-ui-react";
+import { Container, Form, TextArea } from "semantic-ui-react";
 import { TexSvg } from "./TexSvg";
 import { useCallback } from "react";
 import { SaveButton, SnippetsToggleButton } from "./Buttons";
@@ -15,9 +15,16 @@ const PNG_SCALE = 4;
 const SVG_SCALE = 16;
 
 function App() {
-  const { text, onChangeText, onResetText } = useTextInput("ax^2+bx+c=0");
+  const {
+    snippets,
+    topSnippet,
+    addSnippet,
+    deleteSnippet,
+  } = useSnippetStorage();
+  const { text, onChangeText, onResetText } = useTextInput(
+    topSnippet || "ax^2+bx+c=0"
+  );
   const [openSnippets, toggleOpenSnippets] = useToggle(false);
-  const { snippets, addSnippet, deleteSnippet } = useSnippetStorage();
   const onDownload = useDownloadPng({
     pngScale: PNG_SCALE,
     svgScale: SVG_SCALE,
@@ -28,9 +35,14 @@ function App() {
   }, [text, addSnippet, toggleOpenSnippets]);
   return (
     <div className="App">
-      <div>
+      <Container>
         <header className="App-header">
-          <h2 className="App-header-title">LaTeX Snippets</h2>
+          <h1 className="App-header-title">
+            LaTeX Snippet with{" "}
+            <a href="https://www.mathjax.org/" target="_blank" rel="noreferrer">
+              MathJax
+            </a>
+          </h1>
         </header>
         <div className="App-row App-container">
           <Form>
@@ -63,7 +75,7 @@ function App() {
             />
           </div>
         )}
-      </div>
+      </Container>
       <footer className="App-footer">
         <div>© 2021 FujiHaruka</div>
       </footer>
