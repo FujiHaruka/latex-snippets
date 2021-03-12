@@ -1,0 +1,5 @@
+.Logo {
+  transform: rotate(333deg);
+  filter: drop-shadow(0px 4px 2px #666);
+  margin-right: 8px;
+}

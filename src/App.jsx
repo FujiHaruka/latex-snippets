@@ -10,6 +10,7 @@ import { TexSvg } from "./TexSvg";
 import { useCallback } from "react";
 import { SaveButton, SnippetsToggleButton } from "./Buttons";
 import { SnippetList } from "./SnippetList";
+import { Logo } from "./Logo";
 
 const PNG_SCALE = 4;
 const SVG_SCALE = 16;
@@ -38,6 +39,7 @@ function App() {
       <Container>
         <header className="App-header">
           <h1 className="App-header-title">
+            <Logo size={24} />
             LaTeX Snippet with{" "}
             <a href="https://www.mathjax.org/" target="_blank" rel="noreferrer">
               MathJax
