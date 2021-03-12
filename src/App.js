@@ -79,15 +79,17 @@ function App() {
             </Button>
           </div>
           {openSnippets && (
-            <List>
+            <List relaxed>
               {snippets.map(({ key, tex }) => (
-                <List.Item>
+                <List.Item className="App-snippet-list-item" key={key}>
                   <List.Content floated="right">
                     <Button icon circular onClick={() => deleteSnippet(key)}>
                       <Icon name="trash" />
                     </Button>
                   </List.Content>
-                  <List.Content>
+                  <List.Content
+                    onClick={() => onChangeText({ target: { value: tex } })}
+                  >
                     <TexSvg tex={tex} scale={12} />
                   </List.Content>
                 </List.Item>

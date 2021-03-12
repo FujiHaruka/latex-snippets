@@ -24,3 +24,13 @@
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.App-snippet-list-item {
+  cursor: pointer;
+}
+.App-snippet-list-item:hover {
+  background-color: rgb(243, 243, 243);
+}
+.App-snippet-list-item:active {
+  background-color: rgb(235, 235, 235);
+}
