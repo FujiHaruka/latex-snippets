@@ -5,6 +5,12 @@ import { TexSvg } from "./TexSvg";
 export const SnippetList = ({ snippets, onPaste, onDownload, onDelete }) => {
   return (
     <List relaxed="very" divided>
+      {
+        snippets.length === 0 &&
+        <p>
+          No Snippets. "Save" to add a snippet.
+        </p>
+      }
       {snippets.map(({ key, tex }) => (
         <List.Item key={key}>
           <List.Content floated="right">
@@ -12,7 +18,7 @@ export const SnippetList = ({ snippets, onPaste, onDownload, onDelete }) => {
               icon
               circular
               onClick={() => onPaste(tex)}
-              title="Edit"
+              title="Paste to the editor"
               size="mini"
             >
               <Icon name="paste" /> Paste
@@ -21,7 +27,7 @@ export const SnippetList = ({ snippets, onPaste, onDownload, onDelete }) => {
               icon
               circular
               onClick={() => onDownload({ key, tex })}
-              title="Download"
+              title="Download as a png image"
               size="mini"
             >
               <Icon name="download" />
@@ -30,7 +36,7 @@ export const SnippetList = ({ snippets, onPaste, onDownload, onDelete }) => {
               icon
               circular
               onClick={() => onDelete(key)}
-              title="Delete"
+              title="Delete the snippet"
               size="mini"
               style={{ marginLeft: "12px" }}
             >
